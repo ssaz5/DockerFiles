@@ -18,12 +18,10 @@ RUN wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh \
 	 && bash ./Anaconda3-2019.03-Linux-x86_64.sh -b -p $HOME/anaconda
 ENV PATH /home/suleman/anaconda/bin:$PATH
 # Updating Anaconda packages
-RUN conda update conda
-RUN conda update anaconda
-RUN conda update --all
-RUN conda install tensorflow-gpu -y && conda install keras -y \
-
-
+#RUN conda update conda
+#RUN conda update anaconda
+#RUN conda update --all
+RUN conda install tensorflow-gpu=1.12.0 -y && conda install keras -y \
+	 && conda install cudatoolkit=9.0 -y
 WORKDIR /home/suleman
 LABEL maintainer="Syed Suleman Abbas Zaidi <ssazaidi@mit.edu>"
-
