@@ -3,7 +3,13 @@ FROM ubuntu:16.04
 RUN apt-get update && yes|apt-get upgrade
 RUN apt-get install -y emacs
 # Adding wget and bzip2
-RUN apt-get install -y wget bzip2 vim
+RUN apt-get install -y wget bzip2 vim screen \
+    && apt-get install -yq locales \
+    && export LC_ALL="en_US.UTF-8" \
+    && export LC_CTYPE="en_US.UTF-8" \
+    && dpkg-reconfigure locales \
+    && apt update && apt install -y libsm6 libxext6 libxrender-dev \
+    && rm -rf ~/.cache/pip/* 
 # Add sudo
 RUN apt-get -y install sudo
 # Add user ubuntu with no password, add to sudo group
@@ -23,5 +29,4 @@ ENV PATH /home/suleman/anaconda/bin:$PATH
 #RUN conda update --all
 RUN conda install tensorflow-gpu=1.12.0 -y && conda install keras -y \
 	 && conda install cudatoolkit=9.0 -y
-WORKDIR /home/suleman
 LABEL maintainer="Syed Suleman Abbas Zaidi <ssazaidi@mit.edu>"
